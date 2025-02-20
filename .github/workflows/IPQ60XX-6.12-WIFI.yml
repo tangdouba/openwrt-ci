@@ -95,14 +95,6 @@ jobs:
       run: |
         cd $OPENWRT_PATH
         ./scripts/feeds update -a
-        git clone --depth 1 https://github.com/sbwml/openwrt_pkgs.git package/new/custom
-        mv package/new/custom/luci-app-adguardhome  package/new
-        mv package/new/custom/luci-app-netspeedtest  package/new
-        mv package/new/custom/speedtest-cli package/new
-        rm -rf package/new/custom
-        git clone https://github.com/sirpdboy/luci-app-lucky.git package/new/lucky
-        git clone https://github.com/lwb1978/openwrt-gecoosac package/new/openwrt-gecoosac
-        git clone -b main https://github.com/ilxp/luci-app-ikoolproxy.git package/new/luci-app-ikoolproxy
         ./scripts/feeds install -a
   
     - name: Load Custom Configuration(加载自定义配置)
