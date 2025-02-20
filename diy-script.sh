@@ -8,6 +8,7 @@ sed -i 's/\LiBwrt/OpenWrt/g' include/version.mk
 
 # 修改默认ssid
 sed -i 's/LiBwrt/OpenWrt/g' target/linux/qualcommax/base-files/etc/uci-defaults/990_set-wireless.sh
+sed -i 's/LiBwrt/OpenWrt/g' package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc
 
 # 更改默认 Shell 为 zsh
 # sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
