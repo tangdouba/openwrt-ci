@@ -6,6 +6,9 @@ sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_genera
 # 修改默认
 sed -i 's/\LiBwrt/OpenWrt/g' include/version.mk
 
+# 修改默认
+sed -i 's/LiBwrt/OpenWrt/g' target/linux/qualcommax/base-files/etc/uci-defaults/990_set-wireless.sh
+
 # 更改默认 Shell 为 zsh
 # sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
 
