@@ -25,8 +25,8 @@ sed -i 's/LiBwrt/OpenWrt/g' package/network/config/wifi-scripts/files/lib/wifi/m
 # rm -rf feeds/luci/applications/luci-app-mosdns
 # rm -rf feeds/luci/applications/luci-app-netdata
 # rm -rf feeds/luci/applications/luci-app-serverchan
-# rm -rf feeds/luci/applications/luci-app-appfilter
-# rm -rf feeds/packages/net/open-app-filter
+rm -rf feeds/luci/applications/luci-app-appfilter
+rm -rf feeds/packages/net/open-app-filter
 
 # Git稀疏克隆，只克隆指定目录到本地
 function git_sparse_clone() {
