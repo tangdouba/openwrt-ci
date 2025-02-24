@@ -27,6 +27,7 @@ sed -i 's/LiBwrt/OpenWrt/g' package/network/config/wifi-scripts/files/lib/wifi/m
 # rm -rf feeds/luci/applications/luci-app-serverchan
 rm -rf feeds/luci/applications/luci-app-appfilter
 rm -rf feeds/packages/net/open-app-filter
+rm -rf feeds/packages/net/adguardhome
 
 # Git稀疏克隆，只克隆指定目录到本地
 function git_sparse_clone() {
@@ -43,7 +44,8 @@ git clone --depth=1 https://github.com/ilxp/luci-app-ikoolproxy package/luci-app
 git clone --depth=1 https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone --depth=1 https://github.com/sirpdboy/luci-app-lucky package/lucky
 git clone --depth=1 https://github.com/lwb1978/openwrt-gecoosac package/openwrt-gecoosac
-git_sparse_clone main https://github.com/sbwml/openwrt_pkgs luci-app-adguardhome luci-app-netspeedtest speedtest-cli
+git_sparse_clone main https://github.com/sbwml/openwrt_pkgs luci-app-netspeedtest speedtest-cli
+git_sparse_clone main https://github.com/kenzok8/small-package luci-app-adguardhome adguardhome
 # git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-serverchan
 # git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
 # git clone --depth=1 https://github.com/Jason6111/luci-app-netdata package/luci-app-netdata
