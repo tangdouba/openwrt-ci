@@ -26,6 +26,7 @@ rm -rf feeds/luci/themes/luci-theme-argon
 # rm -rf feeds/luci/applications/luci-app-netdata
 # rm -rf feeds/luci/applications/luci-app-serverchan
 rm -rf feeds/luci/applications/luci-app-appfilter
+rm -rf feeds/luci/applications/luci-app-qbittorrent
 rm -rf feeds/packages/net/open-app-filter
 rm -rf feeds/packages/net/adguardhome
 
