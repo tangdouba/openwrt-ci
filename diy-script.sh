@@ -20,7 +20,7 @@ sed -i 's/LiBwrt/OpenWrt/g' package/network/config/wifi-scripts/files/lib/wifi/m
 # rm -rf feeds/packages/net/mosdns
 # rm -rf feeds/packages/net/msd_lite
 # rm -rf feeds/packages/net/smartdns
-# rm -rf feeds/luci/themes/luci-theme-argon
+rm -rf feeds/luci/themes/luci-theme-argon
 # rm -rf feeds/luci/themes/luci-theme-netgear
 # rm -rf feeds/luci/applications/luci-app-mosdns
 # rm -rf feeds/luci/applications/luci-app-netdata
@@ -46,12 +46,17 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-lucky package/lucky
 git clone --depth=1 https://github.com/lwb1978/openwrt-gecoosac package/openwrt-gecoosac
 git_sparse_clone main https://github.com/sbwml/openwrt_pkgs luci-app-netspeedtest speedtest-cli
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-adguardhome adguardhome
+git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-kodexplorer luci-app-qbittorrent luci-app-speedtest-web speedtest-web luci-app-nps nps
 # git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-serverchan
 # git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
 # git clone --depth=1 https://github.com/Jason6111/luci-app-netdata package/luci-app-netdata
 # git_sparse_clone main https://github.com/Lienol/openwrt-package luci-app-filebrowser luci-app-ssr-mudb-server
 # git_sparse_clone openwrt-18.06 https://github.com/immortalwrt/luci applications/luci-app-eqos
 # git_sparse_clone master https://github.com/syb999/openwrt-19.07.1 package/network/services/msd_lite
+
+#更新golang版本
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
 
 # 科学上网插件
 #git clone --depth=1 -b main https://github.com/fw876/helloworld package/luci-app-ssr-plus
@@ -62,13 +67,13 @@ git_sparse_clone main https://github.com/kenzok8/small-package luci-app-adguardh
 
 # Themes
 # git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
-# git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
+git clone --depth=1 -b master https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
 # git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
 # git clone --depth=1 https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
 # git_sparse_clone main https://github.com/haiibo/packages luci-theme-atmaterial luci-theme-opentomcat luci-theme-netgear
 
 # 更改 Argon 主题背景
-cp -f $GITHUB_WORKSPACE/images/bg1.jpg feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
+cp -f $GITHUB_WORKSPACE/images/bg1.jpg package/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 
 # 晶晨宝盒
 # git_sparse_clone main https://github.com/ophub/luci-app-amlogic luci-app-amlogic
@@ -134,6 +139,12 @@ git_sparse_clone main https://github.com/linkease/istore luci
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/controller/*.lua
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/model/cbi/v2ray_server/*.lua
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/view/v2ray_server/*.htm
+
+#修复cpu无法调频BUG
+sed -i 's/START=15/START=99/g' feeds/base/emortal/cpufreq/files/cpufreq.init
+
+#fix bug M2 cpu freq too high which can't really work on it
+sed -i '38c uci_write_config 0 schedutil 864000 1608000' feeds/base/emortal/cpufreq/files/cpufreq.uci
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
