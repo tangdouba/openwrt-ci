@@ -47,7 +47,7 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-lucky package/lucky
 git clone --depth=1 https://github.com/lwb1978/openwrt-gecoosac package/openwrt-gecoosac
 git_sparse_clone main https://github.com/sbwml/openwrt_pkgs luci-app-netspeedtest speedtest-cli
 git_sparse_clone main https://github.com/kenzok8/small-package luci-app-adguardhome adguardhome
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-kodexplorer luci-app-qbittorrent luci-app-speedtest-web speedtest-web luci-app-nps nps
+git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-kodexplorer luci-app-qbittorrent luci-app-nps nps
 # git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-serverchan
 # git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
 # git clone --depth=1 https://github.com/Jason6111/luci-app-netdata package/luci-app-netdata
