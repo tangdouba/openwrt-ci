@@ -147,23 +147,29 @@ sed -i "s/luci-theme-bootstrap/luci-theme-argon/g" $(find ./feeds/luci/collectio
 # 修复cpu无法调频BUG
 sed -i 's/START=15/START=99/g' feeds/base/emortal/cpufreq/files/cpufreq.init
 
-# 修复M2 cpu频率太高无法正常工作
+# 修复ZN M2 cpu频率太高无法正常工作
 sed -i '38c uci_write_config 0 schedutil 864000 1608000' feeds/base/emortal/cpufreq/files/cpufreq.uci
 
-#install_opkg_distfeeds
-    distfeeds_conf="$(find ./ -maxdepth 3 -type f -wholename "*/package/emortal/default-settings/files/99-distfeeds.conf")
+install_opkg_distfeeds() {
+    # 只处理aarch64
+    if ! grep -q "nss-packages" "$OPENWRT_PATH/feeds.conf.default"; then
+        return
+    fi
+    local emortal_def_dir="$OPENWRT_PATH/package/emortal/default-settings"
+    local distfeeds_conf="$emortal_def_dir/files/99-distfeeds.conf"
 
-    if [ ! -f "$distfeeds_conf" ]; then
-        install -Dm755 "GITHUB_WORKSPACE/patches/99-distfeeds.conf" "$distfeeds_conf"
+    if [ -d "$emortal_def_dir" ] && [ ! -f "$distfeeds_conf" ]; then
+        install -Dm755 "$GITHUB_WORKSPACE/patches/99-distfeeds.conf" "$distfeeds_conf"
 
         sed -i "/define Package\/default-settings\/install/a\\
 \\t\$(INSTALL_DIR) \$(1)/etc\\n\
-\t\$(INSTALL_DATA) ./files/99-distfeeds.conf \$(1)/etc/99-distfeeds.conf\n" package/emortal/default-settings/Makefile
+\t\$(INSTALL_DATA) ./files/99-distfeeds.conf \$(1)/etc/99-distfeeds.conf\n" $emortal_def_dir/Makefile
 
         sed -i "/exit 0/i\\
 [ -f \'/etc/99-distfeeds.conf\' ] && mv \'/etc/99-distfeeds.conf\' \'/etc/opkg/distfeeds.conf\'\n\
 sed -ri \'/check_signature/s@^[^#]@#&@\' /etc/opkg.conf\n" $emortal_def_dir/files/99-default-settings
     fi
+}
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
