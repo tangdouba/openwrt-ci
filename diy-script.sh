@@ -136,16 +136,34 @@ git_sparse_clone main https://github.com/linkease/istore luci
 # 取消主题默认设置
 # find package/luci-theme-*/* -type f -name '*luci-theme-*' -print -exec sed -i '/set luci.main.mediaurlbase/d' {} \;
 
+# 修改默认主题
+sed -i "s/luci-theme-bootstrap/luci-theme-argon/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
+
 # 调整 V2ray服务器 到 VPN 菜单
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/controller/*.lua
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/model/cbi/v2ray_server/*.lua
 # sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/view/v2ray_server/*.htm
 
-#修复cpu无法调频BUG
+# 修复cpu无法调频BUG
 sed -i 's/START=15/START=99/g' feeds/base/emortal/cpufreq/files/cpufreq.init
 
-#fix bug M2 cpu freq too high which can't really work on it
+# 修复M2 cpu频率太高无法正常工作
 sed -i '38c uci_write_config 0 schedutil 864000 1608000' feeds/base/emortal/cpufreq/files/cpufreq.uci
+
+#install_opkg_distfeeds
+    distfeeds_conf="$(find ./ -maxdepth 3 -type f -wholename "*/package/emortal/default-settings/files/99-distfeeds.conf")
+
+    if [ ! -f "$distfeeds_conf" ]; then
+        install -Dm755 "GITHUB_WORKSPACE/patches/99-distfeeds.conf" "$distfeeds_conf"
+
+        sed -i "/define Package\/default-settings\/install/a\\
+\\t\$(INSTALL_DIR) \$(1)/etc\\n\
+\t\$(INSTALL_DATA) ./files/99-distfeeds.conf \$(1)/etc/99-distfeeds.conf\n" package/emortal/default-settings/Makefile
+
+        sed -i "/exit 0/i\\
+[ -f \'/etc/99-distfeeds.conf\' ] && mv \'/etc/99-distfeeds.conf\' \'/etc/opkg/distfeeds.conf\'\n\
+sed -ri \'/check_signature/s@^[^#]@#&@\' /etc/opkg.conf\n" $emortal_def_dir/files/99-default-settings
+    fi
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
