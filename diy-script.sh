@@ -97,8 +97,8 @@ cp -f $GITHUB_WORKSPACE/images/bg1.jpg package/luci-theme-argon/htdocs/luci-stat
 # git clone --depth=1 https://github.com/sbwml/luci-app-alist package/luci-app-alist
 
 # DDNS.to
-git_sparse_clone main https://github.com/linkease/nas-packages-luci luci/luci-app-ddnsto
-git_sparse_clone master https://github.com/linkease/nas-packages network/services/ddnsto
+git_sparse_clone main https://github.com/linkease/nas-packages-luci luci/luci-app-ddnsto luci-app-istorex luci-app-quickstart
+git_sparse_clone master https://github.com/linkease/nas-packages network/services/ddnsto quickstart
 
 # iStore
 git_sparse_clone main https://github.com/linkease/istore-ui app-store-ui
