@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 修改默认IP、主机名
-sed -i 's/192.168.1.1/192.168.10.1/g; s/LibWrt/Openwrt/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.10.1/g; s/LibWrt/OpenWrt/g' package/base-files/files/bin/config_generate
 
 # 修改默认信息
 sed -i 's/\LiBwrt/OpenWrt/g' include/version.mk
