@@ -26,6 +26,7 @@ rm -rf feeds/luci/themes/luci-theme-argon
 # rm -rf feeds/luci/applications/luci-app-netdata
 # rm -rf feeds/luci/applications/luci-app-serverchan
 rm -rf feeds/luci/applications/luci-app-appfilter
+rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-qbittorrent
 rm -rf feeds/packages/net/open-app-filter
 rm -rf feeds/packages/net/adguardhome
@@ -64,7 +65,7 @@ git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/l
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2 package/luci-app-passwall2
-#git_sparse_clone master https://github.com/vernesong/OpenClash luci-app-openclash
+git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
 
 # Themes
 # git clone --depth=1 -b 18.06 https://github.com/kiddin9/luci-theme-edge package/luci-theme-edge
@@ -97,8 +98,8 @@ cp -f $GITHUB_WORKSPACE/images/bg1.jpg package/luci-theme-argon/htdocs/luci-stat
 # git clone --depth=1 https://github.com/sbwml/luci-app-alist package/luci-app-alist
 
 # DDNS.to
-git_sparse_clone main https://github.com/linkease/nas-packages-luci luci/luci-app-ddnsto luci-app-istorex luci-app-quickstart
-git_sparse_clone master https://github.com/linkease/nas-packages network/services/ddnsto quickstart
+git clone --depth=1 -b main https://github.com/linkease/nas-packages-luci package/nas-packages-luci 
+git clone --depth=1 -b master https://github.com/linkease/nas-packages package/nas-packages
 
 # iStore
 git_sparse_clone main https://github.com/linkease/istore-ui app-store-ui
